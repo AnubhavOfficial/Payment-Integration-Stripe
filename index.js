@@ -19,6 +19,14 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("It works");
 });
+app.post("/jsonApi", (req, res) => {
+  const { jsonObj } = req.body;
+  if (jsonObj.username === "Anubhav") {
+    res.send({ status: 200 });
+  } else {
+    res.send({ status: 401 });
+  }
+});
 
 app.post("/checkout", async (req, res) => {
   const line_items = req.body.cartItems.map((item) => {
