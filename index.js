@@ -97,4 +97,7 @@ app.post("/checkout", async (req, res) => {
 });
 
 //listen
-app.listen(5000, () => console.log("Listening at port 5000"));
+// app.listen(5000, () => console.log("Listening at port 5000"));
+app.listen(process.env.PORT || 5000, () =>
+  console.log("Listening at port 5000")
+);
