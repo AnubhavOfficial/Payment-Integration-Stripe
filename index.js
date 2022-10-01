@@ -89,8 +89,8 @@ app.post("/checkout", async (req, res) => {
     },
     line_items,
     mode: "payment",
-    success_url: "http://localhost:3000/Checkout-success",
-    cancel_url: "http://localhost:3000/Cart",
+    success_url: "https://amazon-clone-anubhav.netlify.app/Checkout-success",
+    cancel_url: "https://amazon-clone-anubhav.netlify.app/Cart",
   });
 
   res.send(session);
