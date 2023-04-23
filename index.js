@@ -12,6 +12,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(express.json());
+app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
+});
 app.use(cors());
 
 //routes
@@ -37,6 +44,7 @@ app.post("/checkout", async (req, res) => {
       quantity: item.quantity,
     };
   });
+  console.log("gotcha");
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     shipping_address_collection: {
@@ -89,15 +97,15 @@ app.post("/checkout", async (req, res) => {
     },
     line_items,
     mode: "payment",
-    success_url: "https://amazon-clone-anubhav.netlify.app/Checkout-success",
-    cancel_url: "https://amazon-clone-anubhav.netlify.app/Cart",
+    success_url: "https://localhost:3000/Checkout-success",
+    cancel_url: "https://localhost:3000/Cart",
   });
 
   res.send(session);
 });
+// success_url: "https://amazon-clone-anubhav.netlify.app/Checkout-success",
+// cancel_url: "https://amazon-clone-anubhav.netlify.app/Cart",
 
-//listen
-// app.listen(5000, () => console.log("Listening at port 5000"));
 app.listen(process.env.PORT || 5000, () =>
   console.log("Listening at port 5000")
 );
