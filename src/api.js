@@ -4,6 +4,7 @@ const stripe = require("stripe")(
   "sk_test_51LgMdfSESJI0uOFOAObhJNScXxTqdVf7nZxPW790mpjpBfl58njg2Onbscoljx9U6nyY7bAUz7fV1hKrRhob0kVX00PBXtO9mM"
 );
 const uuid = require("uuid").v4;
+const serverless = require("serverless-http");
 const app = express();
 
 const bodyParser = require("body-parser");
@@ -19,12 +20,13 @@ app.use(
 );
 
 //routes
+const router = express.Router();
 
-app.get("/", (req, res) => {
+router.get("/", (req, res) => {
   res.send("It works");
 });
 
-app.post("/checkout", async (req, res) => {
+router.post("/checkout", async (req, res) => {
   const line_items = req.body.cartItems.map((item) => {
     return {
       price_data: {
@@ -106,3 +108,9 @@ app.post("/checkout", async (req, res) => {
 app.listen(process.env.PORT || 5000, () =>
   console.log("Listening at port 5000")
 );
+
+app.use(`/.netlify/functions/api`, router);
+
+// Export the app and the serverless function
+module.exports = app;
+module.exports.handler = serverless(app);
