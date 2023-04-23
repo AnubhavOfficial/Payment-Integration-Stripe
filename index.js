@@ -1,3 +1,4 @@
+const cors = require("cors");
 const express = require("express");
 const stripe = require("stripe")(
   "sk_test_51LgMdfSESJI0uOFOAObhJNScXxTqdVf7nZxPW790mpjpBfl58njg2Onbscoljx9U6nyY7bAUz7fV1hKrRhob0kVX00PBXtO9mM"
@@ -11,13 +12,22 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(express.json());
-app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  next();
-});
+
+app.use(cors());
+
+// Allow all origins with specific methods
+app.use(
+  cors({
+    methods: ["GET", "POST"],
+  })
+);
+
+// Allow all origins with specific headers
+app.use(
+  cors({
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 //routes
 
