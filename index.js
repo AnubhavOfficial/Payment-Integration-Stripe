@@ -15,27 +15,21 @@ app.use(express.json());
 
 app.use(cors());
 
-// Allow all origins with specific methods
-app.use(
-  cors({
-    methods: ["GET", "POST"],
-  })
-);
-
-// Allow all origins with specific headers
-app.use(
-  cors({
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
-
 //routes
 
 app.get("/", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", true);
   res.send("It works");
 });
 
 app.post("/checkout", async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", true);
   const line_items = req.body.cartItems.map((item) => {
     return {
       price_data: {
