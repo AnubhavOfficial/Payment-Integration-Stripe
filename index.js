@@ -1,4 +1,3 @@
-const cors = require("cors");
 const express = require("express");
 const stripe = require("stripe")(
   "sk_test_51LgMdfSESJI0uOFOAObhJNScXxTqdVf7nZxPW790mpjpBfl58njg2Onbscoljx9U6nyY7bAUz7fV1hKrRhob0kVX00PBXtO9mM"
@@ -19,7 +18,6 @@ app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Credentials", true);
   next();
 });
-app.use(cors());
 
 //routes
 
