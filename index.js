@@ -5,7 +5,53 @@ const stripe = require("stripe")(
 );
 const uuid = require("uuid").v4;
 const app = express();
-app.use(cors());
+var whitelist = [
+  "https://amazon-clone-anubhav.netlify.app",
+  "https://amazon-clone-anubhav.netlify.app/Cart",
+  "https://amazon-clone-anubhav.netlify.app/products/1/AddedToCart",
+  "https://amazon-clone-anubhav.netlify.app/products/2/AddedToCart",
+  "https://amazon-clone-anubhav.netlify.app/products/3/AddedToCart",
+  "https://amazon-clone-anubhav.netlify.app/products/4/AddedToCart",
+  "https://amazon-clone-anubhav.netlify.app/products/5/AddedToCart",
+  "https://amazon-clone-anubhav.netlify.app/products/6/AddedToCart",
+  "https://amazon-clone-anubhav.netlify.app/products/7/AddedToCart",
+  "https://amazon-clone-anubhav.netlify.app/products/8/AddedToCart",
+  "https://amazon-clone-anubhav.netlify.app/products/9/AddedToCart",
+  "https://amazon-clone-anubhav.netlify.app/products/10/AddedToCart",
+  "https://amazon-clone-anubhav.netlify.app/products/11/AddedToCart",
+  "https://amazon-clone-anubhav.netlify.app/products/12/AddedToCart",
+  "https://amazon-clone-anubhav.netlify.app/products/13/AddedToCart",
+  "https://amazon-clone-anubhav.netlify.app/products/14/AddedToCart",
+  "https://amazon-clone-anubhav.netlify.app/products/15/AddedToCart",
+  "https://amazon-clone-anubhav.netlify.app/products/16/AddedToCart",
+  "https://amazon-clone-anubhav.netlify.app/products/17/AddedToCart",
+  "https://amazon-clone-anubhav.netlify.app/products/18/AddedToCart",
+  "https://amazon-clone-anubhav.netlify.app/products/19/AddedToCart",
+  "https://amazon-clone-anubhav.netlify.app/products/20/AddedToCart",
+]; //white list consumers
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(null, false);
+    }
+  },
+  methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"],
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  credentials: true, //Credentials are cookies, authorization headers or TLS client certificates.
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "X-Requested-With",
+    "device-remember-token",
+    "Access-Control-Allow-Origin",
+    "Origin",
+    "Accept",
+  ],
+};
+
+app.use(cors(corsOptions));
 
 const bodyParser = require("body-parser");
 
@@ -90,14 +136,12 @@ app.post("/checkout", async (req, res) => {
     },
     line_items,
     mode: "payment",
-    success_url: "https://localhost:3000/Checkout-success",
-    cancel_url: "https://localhost:3000/Cart",
+    success_url: "https://amazon-clone-anubhav.netlify.app/Checkout-success",
+    cancel_url: "https://amazon-clone-anubhav.netlify.app/Cart",
   });
 
   res.send(session);
 });
-// success_url: "https://amazon-clone-anubhav.netlify.app/Checkout-success",
-// cancel_url: "https://amazon-clone-anubhav.netlify.app/Cart",
 
 app.listen(process.env.PORT || 5000, () =>
   console.log("Listening at port 5000")
