@@ -12,16 +12,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(express.json());
-const corsOpts = {
-  origin: "*",
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
-  methods: ["GET", "POST"],
-
-  allowedHeaders: ["Content-Type"],
-};
-
-app.use(cors(corsOpts));
-app.options("*", cors());
 //routes
 
 app.get("/", (req, res) => {
