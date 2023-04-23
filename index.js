@@ -1,4 +1,3 @@
-const cors = require("cors");
 const express = require("express");
 const stripe = require("stripe")(
   "sk_test_51LgMdfSESJI0uOFOAObhJNScXxTqdVf7nZxPW790mpjpBfl58njg2Onbscoljx9U6nyY7bAUz7fV1hKrRhob0kVX00PBXtO9mM"
@@ -12,8 +11,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(express.json());
-
-app.use(cors());
 
 //routes
 
