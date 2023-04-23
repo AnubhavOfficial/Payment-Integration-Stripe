@@ -21,7 +21,7 @@ const corsOpts = {
 };
 
 app.use(cors(corsOpts));
-
+app.options("*", cors());
 //routes
 
 app.get("/", (req, res) => {
